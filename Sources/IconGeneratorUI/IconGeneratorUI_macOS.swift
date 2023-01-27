@@ -1,14 +1,12 @@
-import Cocoa
 import SwiftUI
 
-public enum SnapshotError: Error {
-    case snapshot
-    case tiffRepresentation
-    case bitmapImageRep
-    case pngRepresentation
-}
+#if os(macOS)
+import Cocoa
+#endif
 
 public extension View {
+    
+    #if os(macOS)
     func snapshot(targetSize: CGSize) -> NSImage? {
         let controller = NSHostingController(rootView: self)
         let contentRect = NSRect(origin: .zero, size: targetSize)
@@ -58,4 +56,6 @@ public extension View {
 
         try pngData.write(to: fileUrl)
     }
+    #endif
+
 }
